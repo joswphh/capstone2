@@ -12,6 +12,7 @@ public class UserInterface {
     private List<VeggieToppings> selectedRegularToppings;
     private List<MeatOptions> selectedMeats;
     private Cheeses selectedCheese;
+    private SauceType sauce;
     private double totalPrice;
     private Sides selectedSide;
     private boolean toasted;
@@ -54,9 +55,10 @@ public class UserInterface {
             Scanner scanner = new Scanner(System.in);
             System.out.println("Here is the order screen! Select a number");
             System.out.println("1) Add Sandwich");
-            System.out.println("2) Add Drink");
-            System.out.println("3) Add Chips");
-            System.out.println("4) Checkout");
+            System.out.println("2) Add BLT");
+            System.out.println("3) Add Drink");
+            System.out.println("4) Add Chips");
+            System.out.println("5) Checkout");
             System.out.println("0) Cancel Order");
             int userInput = scanner.nextInt();
             switch (userInput) {
@@ -68,12 +70,15 @@ public class UserInterface {
                     processAddSandwich();
                     break;
                 case 2:
-                    this.processAddDrink();
+
                     break;
                 case 3:
-                    this.processAddChips();
+                    this.processAddDrink();
                     break;
                 case 4:
+                    this.processAddChips();
+                    break;
+                case 5:
                     this.processCheckout();
             }
         }
@@ -224,6 +229,29 @@ public class UserInterface {
 // Calculate the total price for selected cheese
         double totalCheesePrice = (selectedCheese != null) ? selectedCheese.getPrice(selectedSize) : 0.0;
 
+        for (int i = 0; i < SauceType.values().length; i++) {
+            SauceType sauces = SauceType.values()[i];
+            System.out.println(i + 1 + ") " + sauces.getSauce());
+        }
+
+        int sauceSelected;
+        this.sauce = null;
+        do {
+            System.out.println("Select your sauces (enter 0 to finish): ");
+            while(!scanner.hasNextInt()){
+                System.out.println("Invalid input. Please enter a number.");
+                scanner.next(); // consume the invalid input
+            }
+            sauceSelected = scanner.nextInt();
+            if (sauceSelected >= 1 && sauceSelected <= SauceType.values().length) {
+                sauce = SauceType.values()[sauceSelected - 1];
+            }
+        } while (sauceSelected != 0);
+
+        if (sauce != null) {
+            System.out.println("You selected sauce: " + sauce.getSauce());
+        }
+
         System.out.println("Select your side (enter 0 to skip): ");
 
         for (int i = 0; i < Sides.values().length; i++) {
@@ -248,7 +276,7 @@ public class UserInterface {
         } while (sideChoice != 0);
 
         this.totalPrice = totalCheesePrice + totalMeatPrice + selectedSize.getPrice();
-        Sandwich sandwich = new Sandwich(selectedBread, selectedSize, selectedRegularToppings, selectedMeats, selectedCheese, totalPrice, selectedSide, toasted, chips, drink);
+        Sandwich sandwich = new Sandwich(selectedBread, selectedSize, selectedRegularToppings, selectedMeats, selectedCheese, sauce, totalPrice, selectedSide, toasted, chips, drink);
         sandwiches.add(sandwich); // Add the created sandwich to the list
 
         return null;
