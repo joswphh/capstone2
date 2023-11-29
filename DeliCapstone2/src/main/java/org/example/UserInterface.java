@@ -1,12 +1,23 @@
 
 package org.example;
 
-import java.io.PrintStream;
 import java.util.*;
+
+import static org.example.DeliReceiptWriter.writeReceiptToFile;
 
 public class UserInterface {
     Scanner scanner;
-
+    private BreadType selectedBread;
+    private SandwichSize selectedSize;
+    private List<VeggieToppings> selectedRegularToppings;
+    private List<MeatOptions> selectedMeats;
+    private Cheeses selectedCheese;
+    private double totalPrice;
+    private Sides selectedSide;
+    private boolean toasted;
+    private Chips chips;
+    private Drinks drink;
+    List <Sandwich> sandwiches;
     public UserInterface() {
         this.scanner = new Scanner(System.in);
     }
@@ -24,42 +35,50 @@ public class UserInterface {
             switch (userInput) {
                 case 1:
                     this.processMakeNewOrder();
+                    break;
                 case 0:
+                    System.out.println("Thank you!");
                     System.exit(0);
+                    break;
             }
         }
 
     }
 
     private void processMakeNewOrder() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Here is the order screen! Select a number");
-        System.out.println("1) Add Sandwich");
-        System.out.println("2) Add Drink");
-        System.out.println("3) Add Chips");
-        System.out.println("4) Checkout");
-        System.out.println("0) Cancel Order");
-        int userInput = scanner.nextInt();
-        switch (userInput) {
-            case 0:
-                System.out.println("You have canceled your order! We will go back to the home screen!");
-                break;
-            case 1:
-                this.processAddSandwich();
-                break;
-            case 2:
-                this.processAddDrink();
-                break;
-            case 3:
-                this.processAddChips();
-                break;
-            case 4:
-                this.processCheckout();
+        boolean isRunning = true;
+
+        while(isRunning) {
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("Here is the order screen! Select a number");
+            System.out.println("1) Add Sandwich");
+            System.out.println("2) Add Drink");
+            System.out.println("3) Add Chips");
+            System.out.println("4) Checkout");
+            System.out.println("0) Cancel Order");
+            int userInput = scanner.nextInt();
+            switch (userInput) {
+                case 0:
+                    System.out.println("You have canceled your order! We will go back to the home screen!");
+                    isRunning = false;
+                    break;
+                case 1:
+                    processAddSandwich();
+                    break;
+                case 2:
+                    this.processAddDrink();
+                    break;
+                case 3:
+                    this.processAddChips();
+                    break;
+                case 4:
+                    this.processCheckout();
+            }
         }
 
     }
 
-    private void processAddSandwich() {
+    private Sandwich processAddSandwich() {
         System.out.println("Select your bread:");
 
         for (BreadType bread : BreadType.values()) {
@@ -68,7 +87,7 @@ public class UserInterface {
 
         int breadChoice = scanner.nextInt();
 
-        BreadType selectedBread = BreadType.values()[breadChoice - 1];
+        this.selectedBread = BreadType.values()[breadChoice - 1];
 
         System.out.println("Select your size:");
 
@@ -90,7 +109,7 @@ public class UserInterface {
         } while (sizeChoice < 1 || sizeChoice > SandwichSize.values().length);
 
         // Get the corresponding size value based on the user's choice
-        SandwichSize selectedSize = SandwichSize.values()[sizeChoice - 1];
+        this.selectedSize = SandwichSize.values()[sizeChoice - 1];
 
         System.out.println("You selected size: " + selectedSize.getDisplayName());
         System.out.println("Price: $" + selectedSize.getPrice());
@@ -99,7 +118,7 @@ public class UserInterface {
 
         System.out.println("Would you like your bread toasted? (Yes/No)");
         String isToasted = scanner.nextLine();
-        boolean toasted = Boolean.parseBoolean(isToasted);
+        this.toasted = Boolean.parseBoolean(isToasted);
 
         System.out.println("Select your meat toppings (enter 0 to finish): ");
 
@@ -115,7 +134,7 @@ public class UserInterface {
 
         // Read the user's choice for meat toppings
         int meatChoice;
-        List<MeatOptions> selectedMeats = new ArrayList<>();
+        this.selectedMeats = new ArrayList<>();
         do {
             System.out.print("Enter the number corresponding to your choice (enter 0 to finish): ");
             while (!scanner.hasNextInt()) {
@@ -146,7 +165,7 @@ public class UserInterface {
 
         System.out.println("Select your regular toppings (enter 0 to finish): ");
 
-        List<VeggieToppings> selectedRegularToppings = new ArrayList<>();
+        this.selectedRegularToppings = new ArrayList<>();
 
         // Iterate over each regular toppings option and display it to the user
         for (int i = 0; i < VeggieToppings.values().length; i++) {
@@ -171,17 +190,224 @@ public class UserInterface {
         // Display the selected regular toppings
         System.out.println("You selected the following regular toppings: " + selectedRegularToppings);
 
+        System.out.println("Select your cheese (enter 0 to skip): ");
+
+        for (int i = 0; i < Cheeses.values().length; i++) {
+            Cheeses cheese = Cheeses.values()[i];
+            System.out.println(i + 1 + ") " + cheese.getDisplayName() + " - $" + cheese.getPrice(selectedSize));
+        }
+
+// Read the user's choice for cheese
+        int cheeseChoice;
+        this.selectedCheese = null;
+        do {
+            System.out.print("Enter the number corresponding to your choice of cheese (enter 0 to skip): ");
+            while (!scanner.hasNextInt()) {
+                System.out.println("Invalid input. Please enter a number.");
+                scanner.next(); // consume the invalid input
+            }
+            cheeseChoice = scanner.nextInt();
+
+            if (cheeseChoice >= 1 && cheeseChoice <= Cheeses.values().length) {
+                selectedCheese = Cheeses.values()[cheeseChoice - 1];
+            }
+        } while (cheeseChoice != 0);
+
+// Display the selected cheese and its price
+        if (selectedCheese != null) {
+            System.out.println("You selected cheese: " + selectedCheese.getDisplayName());
+            System.out.println("Price: $" + selectedCheese.getPrice(selectedSize));
+        }
+
+// Calculate the total price for selected cheese
+        double totalCheesePrice = (selectedCheese != null) ? selectedCheese.getPrice(selectedSize) : 0.0;
+
+        System.out.println("Select your side (enter 0 to skip): ");
+
+        for (int i = 0; i < Sides.values().length; i++) {
+            Sides side = Sides.values()[i];
+            System.out.println(i + 1 + ") " + side.getDisplayName());
+        }
+
+        // Read the user's choice for a side
+        int sideChoice;
+        this.selectedSide = null;
+        do {
+            System.out.print("Enter the number corresponding to your choice of side (enter 0 to skip): ");
+            while (!scanner.hasNextInt()) {
+                System.out.println("Invalid input. Please enter a number.");
+                scanner.next(); // consume the invalid input
+            }
+            sideChoice = scanner.nextInt();
+
+            if (sideChoice >= 1 && sideChoice <= Sides.values().length) {
+                selectedSide = Sides.values()[sideChoice - 1];
+            }
+        } while (sideChoice != 0);
+
+        this.totalPrice = totalCheesePrice + totalMeatPrice + selectedSize.getPrice();
 
 
-
+        return null;
     }
 
     private void processAddDrink() {
+        Scanner scanner = new Scanner(System.in);
+
+        double drinkPrice = 0;
+
+        DrinkOptions drinkFlavor = null;
+        DrinkType size = null;
+        int sizeCount = 1;
+        int flavorCount = 1;
+
+        ArrayList<DrinkOptions> drinkInventory = new ArrayList<>();
+        drinkInventory.addAll(Arrays.asList(DrinkOptions.values()));
+        Collections.sort(drinkInventory);
+
+
+        ArrayList<DrinkType> drinkSizes = new ArrayList<>();
+        drinkSizes.addAll(Arrays.asList(DrinkType.values()));
+        Collections.sort(drinkSizes);
+
+        System.out.println("Select your cup size: (Number) ");
+
+        for (DrinkType drinkDrinkSizes : drinkSizes) {
+            System.out.println(sizeCount + ") " + drinkDrinkSizes.name());
+            sizeCount++;
+        }
+
+        int drinkSizeChoice = scanner.nextInt();
+
+        if (drinkSizeChoice == 1) {
+            size = DrinkType.SMALL;
+            drinkPrice = 2.00;
+        } else if (drinkSizeChoice == 2) {
+            size = DrinkType.MEDIUM;
+            drinkPrice = 2.50;
+        } else if (drinkSizeChoice == 3) {
+            size = DrinkType.LARGE;
+            drinkPrice = 3.00;
+        }
+
+        System.out.println("Type your drink name:");
+
+        for (DrinkOptions flavors : drinkInventory) {
+            System.out.println(flavorCount + ") " + flavors.name());
+            flavorCount++;
+        }
+
+        scanner.nextLine();
+        String userChoice = scanner.nextLine();
+
+        drinkFlavor = switch (userChoice) {
+            case "1" -> DrinkOptions.SPRITE;
+            case "2" -> DrinkOptions.ROOT_BEER;
+            case "3" -> DrinkOptions.WATER;
+            case "4" -> DrinkOptions.COCA_COLA;
+            default -> {
+                System.out.println("Wrong input. PLease try again.");
+                yield null;
+            }
+        };
+
+        Drinks drinks = new Drinks(drinkPrice, size, drinkFlavor);
+        // public Drinks(String name, double price, DrinkType drinkSize, DrinkOptions drinkFlavor) {
+
+        System.out.println("Your " + drinkFlavor + " drink has successfully been added to your order!");
+
     }
 
+       /* flavorChoice = switch (userChoice) {
+            case "SPRITE" -> DrinkOptions.SPRITE;
+            case "ROOT_BEER" -> DrinkOptions.ROOT_BEER;
+            case "WATER" -> DrinkOptions.WATER;
+            case "COCA_COLA" -> DrinkOptions.COCA_COLA;
+            default -> flavorChoice;
+        };
+
+        */
+
+
     private void processAddChips() {
+        Scanner scanner = new Scanner(System.in);
+
+        ChipType chipFlavors = null;
+        int count = 1;
+
+         ArrayList<ChipType> chipInventory = new ArrayList<>();
+        chipInventory.addAll(Arrays.asList(ChipType.values()));
+        Collections.sort(chipInventory);
+
+
+        System.out.println("Choose your chips! Select a number ");
+
+        for (ChipType myChips : chipInventory) {
+
+            System.out.println(count + ") " + myChips.name() + ": " + myChips.getChipPrice());
+            count++;
+        }
+
+        String userChoice = scanner.nextLine();
+
+        chipFlavors = switch (userChoice) {
+            case "1" -> ChipType.BBQ;
+            case "2" -> ChipType.PLAIN;
+            case "3" -> ChipType.PICKLE;
+            case "4" -> ChipType.HOT;
+            default -> chipFlavors;
+        };
+
+        this.chips = new Chips(userChoice, 1.50, chipFlavors);
+
+        System.out.println("Your " + chipFlavors + " chips has successfully been added to your order!");
+
     }
 
     private void processCheckout() {
+        boolean isCheckingOut = true;
+        Scanner scan = new Scanner(System.in);
+
+        while (isCheckingOut) {
+
+            System.out.println("Would you like to proceed with checkout? Y/N");
+            String selection = scan.nextLine().toUpperCase();
+
+            switch (selection) {
+                case "Y":
+                    isCheckingOut = false;
+                    System.out.println("How would you like to pay?");
+                    System.out.println("1) Cash");
+                    System.out.println("2) Debit");
+                    int paymentMethod = scan.nextInt();
+
+                    if (paymentMethod == 1) {
+                        System.out.println("Thank You for ordering!");
+                    } else if (paymentMethod == 2) {
+                        System.out.println("1) Swipe, 2) Insert, or 3) Tap your card");
+                        int payFunction = scan.nextInt();
+                        if (payFunction == 3) {
+                            System.out.println("Approved!\n");
+                            System.out.println("Thank You for ordering from D!");
+                        } else {
+                            System.out.println("Enter your pin");
+                            int pin = scan.nextInt();
+                            System.out.println("Approved!\n");
+                            System.out.println("Thank You for ordering!");
+                        }
+                    } else {
+                        System.out.println("Please enter a valid selection.");
+                    }
+
+                    writeReceiptToFile(selectedBread, selectedSize, selectedRegularToppings, selectedMeats, selectedCheese, totalPrice, selectedSide, toasted, chips, drink);
+                    break;
+                case "N":
+                    // Loop back into checkout start
+                    isCheckingOut = false;
+                    break;
+                default:
+                    System.out.println("Please enter a valid selection");
+            }
+        }
     }
 }

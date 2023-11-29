@@ -1,0 +1,12 @@
+Order Details for Order 91:
+Bread Type: WHITE
+Size: EIGHT_INCH
+Regular Toppings:
+- Lettuce
+Meat Toppings:
+- Extra meat - $1.0
+Cheese: American - $1.5
+Side: Au jus
+Toasted: No
+Chips: PLAIN Price: 1.5
+Total sandwich Price: $11.0

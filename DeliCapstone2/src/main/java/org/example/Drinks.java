@@ -1,13 +1,22 @@
 package org.example;
 
-public class Drinks extends Items {
+public class Drinks{
+    private double price;
     private DrinkType drinkSize;
     private DrinkOptions drinkFlavor;
 
-    public Drinks(String name, double price, DrinkType drinkSize, DrinkOptions drinkFlavor) {
-        super(name, price);
+    public Drinks(double price, DrinkType drinkSize, DrinkOptions drinkFlavor) {
+        this.price = price;
         this.drinkSize = drinkSize;
         this.drinkFlavor = drinkFlavor;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
     }
 
     public DrinkType getDrinkSize() {
