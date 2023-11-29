@@ -1,0 +1,15 @@
+Order Details for Order 180:
+Sandwiches:
+Bread: WHITE
+Size: EIGHT_INCH
+Regular Toppings: [LETTUCE]
+Meats: [EXTRA_MEAT]
+Cheese: AMERICAN
+Sauce: MAYO
+Total Price: $9.5
+
+Chips:
+
+Drinks:
+
+Total Price: $9.5

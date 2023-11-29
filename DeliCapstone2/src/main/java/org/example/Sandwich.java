@@ -8,6 +8,7 @@ public class Sandwich {
     private List<VeggieToppings> selectedRegularToppings;
     private List<MeatOptions> selectedMeats;
     private Cheeses selectedCheese;
+    private SauceType sauce;
     private double totalPrice;
     private Sides selectedSide;
     private boolean toasted;
@@ -15,12 +16,13 @@ public class Sandwich {
     private Drinks drinks;
 
 
-    public Sandwich(BreadType breadType, SandwichSize selectedSize, List<VeggieToppings> selectedRegularToppings, List<MeatOptions> selectedMeats, Cheeses selectedCheese, double totalPrice, Sides selectedSide, boolean toasted, Chips chips, Drinks drinks) {
+    public Sandwich(BreadType breadType, SandwichSize selectedSize, List<VeggieToppings> selectedRegularToppings, List<MeatOptions> selectedMeats, Cheeses selectedCheese, SauceType sauce, double totalPrice, Sides selectedSide, boolean toasted, Chips chips, Drinks drinks) {
         this.breadType = breadType;
         this.selectedSize = selectedSize;
         this.selectedRegularToppings = selectedRegularToppings;
         this.selectedMeats = selectedMeats;
         this.selectedCheese = selectedCheese;
+        this.sauce = sauce;
         this.totalPrice = totalPrice;
         this.selectedSide = selectedSide;
         this.toasted = toasted;
@@ -105,6 +107,14 @@ public class Sandwich {
         return drinks;
     }
 
+    public SauceType getSauce() {
+        return sauce;
+    }
+
+    public void setSauce(SauceType sauce) {
+        this.sauce = sauce;
+    }
+
     public void setDrinks(Drinks drinks) {
         this.drinks = drinks;
     }
@@ -115,6 +125,7 @@ public class Sandwich {
                 "Regular Toppings: " + selectedRegularToppings + "\n" +
                 "Meats: " + selectedMeats + "\n" +
                 "Cheese: " + selectedCheese + "\n" +
+                "Sauce: " + sauce + "\n" +
                 "Total Price: $" + totalPrice;
     }
 // private Sandwich processAddSandwich() {
