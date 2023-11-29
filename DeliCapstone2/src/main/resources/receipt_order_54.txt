@@ -1,0 +1,12 @@
+Order Details for Order 54:
+Bread Type: WHITE
+Size: FOUR_INCH
+Regular Toppings:
+- Lettuce
+Meat Toppings:
+- Extra meat - $0.5
+Cheese: American - $0.75
+Side: Au jus
+Toasted: No
+Chips: BBQ Price: 1.5
+Total sandwich Price: $8.25

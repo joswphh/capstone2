@@ -1,0 +1,18 @@
+Order Details for Order 188:
+Bread Type: WHITE
+Size: EIGHT_INCH
+Regular Toppings:
+- Lettuce
+- Pepper
+Meat Toppings:
+- Steak - $2.0
+- Extra meat - $1.0
+Cheese: American - $1.5
+Side: Au jus
+Toasted: No
+Chips:
+- BQQ - $1.5
+- Plain - $1.5
+- Pickle - $1.5
+- Hot - $1.5
+Total sandwich Price: $17.5
