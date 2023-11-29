@@ -17,7 +17,9 @@ public class UserInterface {
     private boolean toasted;
     private Chips chips;
     private Drinks drink;
-    List <Sandwich> sandwiches;
+    List<Sandwich> sandwiches = new ArrayList<>(); // Track multiple sandwiches
+    List<Chips> chipsList = new ArrayList<>(); // Track multiple chips
+    List<Drinks> drinksList = new ArrayList<>(); // Track multiple drinks
     public UserInterface() {
         this.scanner = new Scanner(System.in);
     }
@@ -129,7 +131,7 @@ public class UserInterface {
 
         // Display the sorted meat toppings
         for (MeatOptions meat : availableMeats) {
-            System.out.println(meat.getDisplayName() + " - $" + meat.getPrice(selectedSize));
+            System.out.println(meat.ordinal()+1 + ") " + meat.getDisplayName() + " - $" + meat.getPrice(selectedSize));
         }
 
         // Read the user's choice for meat toppings
@@ -246,7 +248,8 @@ public class UserInterface {
         } while (sideChoice != 0);
 
         this.totalPrice = totalCheesePrice + totalMeatPrice + selectedSize.getPrice();
-
+        Sandwich sandwich = new Sandwich(selectedBread, selectedSize, selectedRegularToppings, selectedMeats, selectedCheese, totalPrice, selectedSide, toasted, chips, drink);
+        sandwiches.add(sandwich); // Add the created sandwich to the list
 
         return null;
     }
@@ -313,6 +316,8 @@ public class UserInterface {
 
         Drinks drinks = new Drinks(drinkPrice, size, drinkFlavor);
         // public Drinks(String name, double price, DrinkType drinkSize, DrinkOptions drinkFlavor) {
+        this.drink = drinks;
+        drinksList.add(drinks); // Add the created drink to the list
 
         System.out.println("Your " + drinkFlavor + " drink has successfully been added to your order!");
 
@@ -359,6 +364,7 @@ public class UserInterface {
         };
 
         this.chips = new Chips(userChoice, 1.50, chipFlavors);
+        chipsList.add(chips); // Add the created chips to the list
 
         System.out.println("Your " + chipFlavors + " chips has successfully been added to your order!");
 
@@ -399,7 +405,9 @@ public class UserInterface {
                         System.out.println("Please enter a valid selection.");
                     }
 
-                    writeReceiptToFile(selectedBread, selectedSize, selectedRegularToppings, selectedMeats, selectedCheese, totalPrice, selectedSide, toasted, chips, drink);
+                    //writeReceiptToFile(selectedBread, selectedSize, selectedRegularToppings, selectedMeats, selectedCheese, totalPrice, selectedSide, toasted, chips, drink);
+                    writeReceiptToFile(sandwiches, chipsList, drinksList);
+
                     break;
                 case "N":
                     // Loop back into checkout start

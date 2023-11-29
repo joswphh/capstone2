@@ -1,0 +1,11 @@
+Order Details for Order 53:
+Bread Type: WHITE
+Size: FOUR_INCH
+Regular Toppings:
+- Onions
+Meat Toppings:
+- Steak - $1.0
+Cheese: Cheddar - $0.75
+Side: Au jus
+Toasted: No
+Total sandwich Price: $7.25

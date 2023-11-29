@@ -1,0 +1,10 @@
+Order Details for Order 173:
+Bread Type: WHITE
+Size: TWELVE_INCH
+Regular Toppings:
+- Onions
+Meat Toppings:
+- Ham - $3.0
+Cheese: Cheddar - $2.25
+Toasted: No
+Total sandwich Price: $13.75

@@ -1,0 +1,16 @@
+Order Details for Order 123:
+Sandwiches:
+Bread: WHITE
+Size: EIGHT_INCH
+Regular Toppings: [TOMATOES, ONIONS, GUACAMOLE]
+Meats: [STEAK]
+Cheese: EXTRA_CHEESE
+Total Price: $9.6
+
+Chips:
+Type: BBQ, Price: $1.5
+
+Drinks:
+Flavor: SPRITE, Size: LARGE, Price: $3.0
+
+Total Price: $14.1

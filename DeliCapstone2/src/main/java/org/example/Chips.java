@@ -15,4 +15,10 @@ public class Chips extends Items {
     public void setChipType(ChipType chipType) {
         this.chipType = chipType;
     }
+
+    @Override
+    public String toString() {
+        return "Type: " + chipType + "\n" +
+                "Price: $" + getPrice();
+    }
 }
