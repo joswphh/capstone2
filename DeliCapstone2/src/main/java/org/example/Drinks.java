@@ -34,4 +34,11 @@ public class Drinks{
     public void setDrinkFlavor(DrinkOptions drinkFlavor) {
         this.drinkFlavor = drinkFlavor;
     }
+
+    @Override
+    public String toString() {
+        return "Flavor: " + drinkFlavor + "\n" +
+                "Size: " + drinkSize + "\n" +
+                "Price: $" + price;
+    }
 }

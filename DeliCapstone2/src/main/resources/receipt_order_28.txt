@@ -1,0 +1,15 @@
+Order Details for Order 28:
+Sandwiches:
+Bread: WHITE, Size: EIGHT_INCH, Regular Toppings: [LETTUCE], Meats: [ROAST_BEEF], Cheese: AMERICAN, Total Price: $10.5
+Bread: WHITE, Size: TWELVE_INCH, Regular Toppings: [LETTUCE], Meats: [ROAST_BEEF], Cheese: EXTRA_CHEESE, Total Price: $12.4
+
+Chips:
+Type: BBQ, Price: $1.5
+Type: PICKLE, Price: $1.5
+Type: HOT, Price: $1.5
+
+Drinks:
+Flavor: WATER, Size: LARGE, Price: $3.0
+Flavor: SPRITE, Size: MEDIUM, Price: $2.5
+
+Total Price: $32.9

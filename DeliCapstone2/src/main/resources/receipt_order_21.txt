@@ -1,0 +1,14 @@
+Order Details for Order 21:
+Sandwiches:
+Bread: WRAP
+Size: TWELVE_INCH
+Regular Toppings: [LETTUCE]
+Meats: [STEAK]
+Cheese: SWISS
+Total Price: $13.75
+
+Chips:
+
+Drinks:
+
+Total Price: $13.75

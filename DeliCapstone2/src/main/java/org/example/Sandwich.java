@@ -11,9 +11,11 @@ public class Sandwich {
     private double totalPrice;
     private Sides selectedSide;
     private boolean toasted;
+    private Chips chips;
+    private Drinks drinks;
 
 
-    public Sandwich(BreadType breadType, SandwichSize selectedSize, List<VeggieToppings> selectedRegularToppings, List<MeatOptions> selectedMeats, Cheeses selectedCheese, double totalPrice, Sides selectedSide, boolean toasted) {
+    public Sandwich(BreadType breadType, SandwichSize selectedSize, List<VeggieToppings> selectedRegularToppings, List<MeatOptions> selectedMeats, Cheeses selectedCheese, double totalPrice, Sides selectedSide, boolean toasted, Chips chips, Drinks drinks) {
         this.breadType = breadType;
         this.selectedSize = selectedSize;
         this.selectedRegularToppings = selectedRegularToppings;
@@ -22,6 +24,9 @@ public class Sandwich {
         this.totalPrice = totalPrice;
         this.selectedSide = selectedSide;
         this.toasted = toasted;
+        this.chips = chips;
+        this.drinks = drinks;
+
     }
 
     public BreadType getBreadType() {
@@ -88,14 +93,38 @@ public class Sandwich {
         this.toasted = toasted;
     }
 
-    private Sandwich processAddSandwich() {
+    public Chips getChips() {
+        return chips;
+    }
+
+    public void setChips(Chips chips) {
+        this.chips = chips;
+    }
+
+    public Drinks getDrinks() {
+        return drinks;
+    }
+
+    public void setDrinks(Drinks drinks) {
+        this.drinks = drinks;
+    }
+    @Override
+    public String toString() {
+        return "Bread: " + breadType + "\n" +
+                "Size: " + selectedSize + "\n" +
+                "Regular Toppings: " + selectedRegularToppings + "\n" +
+                "Meats: " + selectedMeats + "\n" +
+                "Cheese: " + selectedCheese + "\n" +
+                "Total Price: $" + totalPrice;
+    }
+// private Sandwich processAddSandwich() {
         // Your existing code for adding a sandwich
         // ...
 
-        Sandwich newSandwich = new Sandwich(getBreadType(), getSelectedSize(),getSelectedRegularToppings(),getSelectedMeats(),
-                getSelectedCheese(),getTotalPrice(),getSelectedSide(),isToasted());
+        //Sandwich newSandwich = new Sandwich(getBreadType(), getSelectedSize(),getSelectedRegularToppings(),getSelectedMeats(),
+         //       getSelectedCheese(),getTotalPrice(),getSelectedSide(),isToasted());
         // Set properties of newSandwich based on user input
 
-        return newSandwich;
-    }
+        //return newSandwich;
+
 }
