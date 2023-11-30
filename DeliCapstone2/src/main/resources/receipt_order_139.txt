@@ -1,0 +1,17 @@
+Order Details for Order 139:
+Sandwiches:
+Bread: WHITE
+Size: EIGHT_INCH
+Regular Toppings: [LETTUCE, TOMATOES]
+Meats: [BACON]
+Cheese: CHEDDAR
+Sauce: RANCH
+Toasted: true
+Total Price: $11.0
+
+
+Chips:
+
+Drinks:
+
+Total Price: $11.0

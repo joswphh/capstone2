@@ -55,7 +55,7 @@ public class UserInterface {
             Scanner scanner = new Scanner(System.in);
             System.out.println("Here is the order screen! Select a number");
             System.out.println("1) Add Sandwich");
-            System.out.println("2) Add BLT");
+            System.out.println("2) Add Preset sandwich");
             System.out.println("3) Add Drink");
             System.out.println("4) Add Chips");
             System.out.println("5) Checkout");
