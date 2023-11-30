@@ -1,21 +1,22 @@
 
 package org.example;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class PhillyCheeseSteak extends Sandwich {
     private static final BreadType BLT_BREAD_TYPE = BreadType.WHITE;
     private static final SandwichSize BLT_SIZE = SandwichSize.EIGHT_INCH;
-    private static final List<VeggieToppings> BLT_REGULAR_TOPPINGS = List.of(VeggieToppings.PEPPER);
+    private static final List<VeggieToppings> BLT_REGULAR_TOPPINGS = new ArrayList<>(Arrays.asList(VeggieToppings.PEPPER));
     private static final List<MeatOptions> BLT_MEATS = List.of(MeatOptions.STEAK);
     private static final Cheeses BLT_CHEESE = Cheeses.AMERICAN;
     private static final SauceType BLT_SAUCE = SauceType.MAYO;
-    private static final double BLT_TOTAL_PRICE = 0.0; // Set the correct total price based on your pricing logic
+    private static final double BLT_TOTAL_PRICE = 11.00;
     private static final Sides BLT_SIDE = null;
-    private static final boolean BLT_TOASTED = true; // BLT is not toasted
-    private static final Chips BLT_CHIPS = null; // BLT doesn't come with chips
-    private static final Drinks BLT_DRINK = null; // BLT doesn't come with a drink
+    private static final boolean BLT_TOASTED = true;
+    private static final Chips BLT_CHIPS = null;
+    private static final Drinks BLT_DRINK = null;
 
     // Constructor using the preset values
     public PhillyCheeseSteak() {
@@ -31,4 +32,5 @@ public class PhillyCheeseSteak extends Sandwich {
     public void removeToppings(VeggieToppings... toppings) {
         this.getSelectedRegularToppings().removeAll(Arrays.asList(toppings));
     }
+
 }

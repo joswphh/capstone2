@@ -126,16 +126,8 @@ public class Sandwich {
                 "Meats: " + selectedMeats + "\n" +
                 "Cheese: " + selectedCheese + "\n" +
                 "Sauce: " + sauce + "\n" +
-                "Total Price: $" + totalPrice;
+                "Toasted: " + toasted + "\n" +
+                "Total Price: $" + totalPrice + "\n";
     }
-// private Sandwich processAddSandwich() {
-        // Your existing code for adding a sandwich
-        // ...
-
-        //Sandwich newSandwich = new Sandwich(getBreadType(), getSelectedSize(),getSelectedRegularToppings(),getSelectedMeats(),
-         //       getSelectedCheese(),getTotalPrice(),getSelectedSide(),isToasted());
-        // Set properties of newSandwich based on user input
-
-        //return newSandwich;
 
 }
