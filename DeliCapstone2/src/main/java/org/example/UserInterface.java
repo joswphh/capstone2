@@ -70,7 +70,7 @@ public class UserInterface {
                     processAddSandwich();
                     break;
                 case 2:
-
+                    processPresetSandwich();
                     break;
                 case 3:
                     this.processAddDrink();
@@ -80,6 +80,8 @@ public class UserInterface {
                     break;
                 case 5:
                     this.processCheckout();
+                default:
+                    System.out.println("Invalid option. select numbers 0-5.");
             }
         }
 
@@ -123,9 +125,23 @@ public class UserInterface {
 
         scanner.nextLine();
 
-        System.out.println("Would you like your bread toasted? (Yes/No)");
-        String isToasted = scanner.nextLine();
-        this.toasted = Boolean.parseBoolean(isToasted);
+        boolean validInput = false;
+
+        while (!validInput) {
+            System.out.println("Would you like your bread toasted? (Yes/No)");
+            String isToasted = scanner.nextLine().toLowerCase();
+
+            if ("yes".equals(isToasted)) {
+                this.toasted = true;
+                validInput = true; // Exit the loop if the input is valid
+            } else if ("no".equals(isToasted)) {
+                this.toasted = false;
+                validInput = true; // Exit the loop if the input is valid
+            } else {
+                System.out.println("Invalid option. Please enter (Yes/No).");
+            }
+        }
+
 
         System.out.println("Select your meat toppings (enter 0 to finish): ");
 
@@ -432,9 +448,10 @@ public class UserInterface {
                     } else {
                         System.out.println("Please enter a valid selection.");
                     }
-
-                    //writeReceiptToFile(selectedBread, selectedSize, selectedRegularToppings, selectedMeats, selectedCheese, totalPrice, selectedSide, toasted, chips, drink);
                     writeReceiptToFile(sandwiches, chipsList, drinksList);
+                    sandwiches.clear();
+                    chipsList.clear();
+                    drinksList.clear();
 
                     break;
                 case "N":
@@ -445,5 +462,206 @@ public class UserInterface {
                     System.out.println("Please enter a valid selection");
             }
         }
+    }
+
+    public void processPresetSandwich(){
+        boolean presetLoop = true;
+
+        while(presetLoop){
+            System.out.println("---You are choosing from preset sandwiches---");
+            System.out.println("Please select one of the following");
+            System.out.println("-------------------------------------");
+            System.out.println("1) BLT  preset sandwich");
+            System.out.println("2) Philly cheese steak  preset sandwich");
+            System.out.println("3) go back to main menu");
+            int presetChoice = 0;
+            
+            if(scanner.hasNextInt()){
+                presetChoice = scanner.nextInt();
+            }else {
+                System.out.println("Invalid input. PLease enter a number 1-3.");
+            }
+            switch(presetChoice){
+                case 1:
+                    addBLT();
+                    break;
+                case 2:
+                    addPhillyCheeseSteak();
+                    break;
+                case 3:
+                    presetLoop = false;
+                    break;
+                default:
+                    System.out.println("Invalid option, please try again.");
+            }
+        }
+    }
+
+    public void addBLT(){
+        BLT blt = new BLT();
+        List<VeggieToppings> availableToppings = new ArrayList<>(Arrays.asList(VeggieToppings.values()));
+
+        // Display the current state of the BLT sandwich
+        System.out.println("Current state of BLT sandwich:");
+        System.out.println(blt.toString());
+        boolean modifyToppings = true;
+
+        while (modifyToppings) {
+            System.out.println("1) Add Toppings");
+            System.out.println("2) Remove Toppings");
+            System.out.println("0) Done");
+
+            int userChoice = scanner.nextInt();
+
+            switch (userChoice) {
+                case 0:
+                    // User is done modifying toppings
+                    modifyToppings = false;
+                    break;
+                case 1:
+                    // Display available toppings
+                    System.out.println("Available toppings:");
+                    for (VeggieToppings topping : VeggieToppings.values()) {
+                        System.out.println(topping.ordinal() + 1 + ": " + topping);
+                    }
+
+                    // Prompt the user to add toppings
+                    System.out.println("Enter the number corresponding to the topping you want to add (enter 0 to finish): ");
+                    int toppingChoice;
+                    do {
+                        while (!scanner.hasNextInt()) {
+                            System.out.println("Invalid input. Please enter a number.");
+                            scanner.next(); // consume the invalid input
+                        }
+                        toppingChoice = scanner.nextInt();
+
+                        if (toppingChoice >= 1 && toppingChoice <= availableToppings.size()) {
+                            blt.addToppings(availableToppings.get(toppingChoice - 1));
+                            System.out.println("You selected the following regular toppings (press 0 to exit): " + toppingChoice);
+                        }
+                    } while (toppingChoice != 0);
+
+                    break;
+
+                case 2:
+                    // Display current toppings
+                    System.out.println("Current toppings:");
+                    for (VeggieToppings topping : blt.getSelectedRegularToppings()) {
+                        System.out.println(topping.ordinal() + 1 + ": " + topping);
+                    }
+
+                    // Prompt the user to remove toppings
+                    System.out.println("Enter the number corresponding to the topping you want to remove (enter 0 to finish): ");
+                    int removeChoice;
+                    do {
+                        while (!scanner.hasNextInt()) {
+                            System.out.println("Invalid input. Please enter a number.");
+                            scanner.next(); // consume the invalid input
+                        }
+                        removeChoice = scanner.nextInt();
+
+                        if (removeChoice >= 1 && removeChoice <= availableToppings.size()) {
+                            blt.removeToppings(availableToppings.get(removeChoice - 1));
+                            System.out.println("You removed the following regular toppings (press 0 to exit): " + removeChoice);
+
+                        }
+                    } while (removeChoice != 0);
+
+                    break;
+
+                default:
+                    System.out.println("Invalid choice. Please enter a valid option.");
+            }
+        }
+        sandwiches.add(blt);
+        // Display the final state of the BLT sandwich after modifications
+        System.out.println("Final state of BLT sandwich:");
+        System.out.println(blt.toString());
+
+        scanner.nextLine();
+    }
+
+
+    public void addPhillyCheeseSteak(){
+        PhillyCheeseSteak philly = new PhillyCheeseSteak();
+        List<VeggieToppings> availableToppings = new ArrayList<>(Arrays.asList(VeggieToppings.values()));
+
+        // Display the current state of the BLT sandwich
+        System.out.println("Current state of BLT sandwich:");
+        System.out.println(philly.toString());
+        boolean modifyToppings = true;
+
+
+        while (modifyToppings) {
+            System.out.println("1) Add Toppings");
+            System.out.println("2) Remove Toppings");
+            System.out.println("0) Done");
+
+            int userChoice = scanner.nextInt();
+
+            switch (userChoice) {
+                case 0:
+                    // User is done modifying toppings
+                    modifyToppings = false;
+                    break;
+                case 1:
+                    // Display available toppings
+                    System.out.println("Available toppings:");
+                    for (VeggieToppings topping : VeggieToppings.values()) {
+                        System.out.println(topping.ordinal() + 1 + ": " + topping);
+                    }
+
+                    // Prompt the user to add toppings
+                    System.out.println("Enter the number corresponding to the topping you want to add (enter 0 to finish): ");
+                    int toppingChoice;
+                    do {
+                        while (!scanner.hasNextInt()) {
+                            System.out.println("Invalid input. Please enter a number.");
+                            scanner.next(); // consume the invalid input
+                        }
+                        toppingChoice = scanner.nextInt();
+
+                        if (toppingChoice >= 1 && toppingChoice <= availableToppings.size()) {
+                            philly.addToppings(availableToppings.get(toppingChoice - 1));
+                            System.out.println("You selected the following regular toppings (press 0 to exit): " + toppingChoice);
+                        }
+                    } while (toppingChoice != 0);
+
+                    break;
+
+                case 2:
+                    // Display current toppings
+                    System.out.println("Current toppings:");
+                    for (VeggieToppings topping : philly.getSelectedRegularToppings()) {
+                        System.out.println(topping.ordinal() + 1 + ": " + topping);
+                    }
+
+                    // Prompt the user to remove toppings
+                    System.out.println("Enter the number corresponding to the topping you want to remove (enter 0 to finish): ");
+                    int removeChoice;
+                    do {
+                        while (!scanner.hasNextInt()) {
+                            System.out.println("Invalid input. Please enter a number.");
+                            scanner.next(); // consume the invalid input
+                        }
+                        removeChoice = scanner.nextInt();
+
+                        if (removeChoice >= 1 && removeChoice <= availableToppings.size()) {
+                            philly.removeToppings(availableToppings.get(removeChoice - 1));
+                            System.out.println("You removed the following regular toppings (press 0 to exit): " + removeChoice);
+
+                        }
+                    } while (removeChoice != 0);
+
+                    break;
+
+                default:
+                    System.out.println("Invalid choice. Please enter a valid option.");
+            }
+        }
+        sandwiches.add(philly);
+        // Display the final state of the BLT sandwich after modifications
+        System.out.println("Final state of BLT sandwich:");
+        System.out.println(philly.toString());
     }
 }
